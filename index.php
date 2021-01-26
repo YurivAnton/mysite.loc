@@ -224,7 +224,7 @@ if(file_exists($path)){
     include 'layout.php';*/
 
 //45.13
-    /*$host = 'localhost';
+    $host = 'localhost';
     $user = 'root';
     $password = '123';
     $dbName = 'test';
@@ -252,5 +252,5 @@ if(file_exists($path)){
     $title = $page['title'];
     $content = $page['text'];
 
-    include 'layout.php';*/
+    include 'layout.php';
 //45.14
