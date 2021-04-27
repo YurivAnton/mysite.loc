@@ -1,55 +1,79 @@
 <?php
 session_start();
-//47 Задачи на правильную организацию баз данных
-
-error_reporting(E_ALL);
-ini_set('display_errors', 'on');
-
 $host = 'localhost';
-$user = 'root';
+$user = 'base_user';
 $password = '123';
-$dbName = 'test1';
+$dbName = 'test';
 
-$link = mysqli_connect($host, $user, $password, $dbName);
+$link = mysqli_connect($host, $user, $password,$dbName);
 $result = mysqli_query($link, "SET NAMES 'utf8'");
 
-// 35. Есть сайт с платным доступом на вебинары. Когда участник
-// (ему не надо регистрироваться на сайте) покупает доступ — он получает
-// специальный код (пример: dk85Fj,_865gklg) и по этому коду может зайти
-// на вебинар. Доступ может быть разовым (1 человек на 1 любой вебинар,
-// второй человек зайти по этому коду уже не сможет) или многоразовым
-// (например, 10 вебинаров). При этом по многоразовому доступу не могут
-// зайти два человека на 1 вебинар.
+// 36. Страницы на сайте. Каждая страница может быть поредактирована в админке при этом старая версия не удаляется, а хранится как 'предыдущая версия'. При необходимости страницу можно откатить к предыдущей версии. Нужно хранить не более 5-ти предыдущих версий каждой страницы (то есть 6-тую уже не храним).
 
-
-?>
-<form method="POST" action="">
-    <input name="discount_code">
-    <input name="log_in" type="submit" value="log_in">
-    <input name="log_out" type="submit" value="log_out">
-</form>
-<?php
-if(isset($_POST['log_in'])){
-    $discount_code = $_POST['discount_code'];
+if(!empty($_POST['mail']) AND !empty($_POST['password'])) {
+    $mail = $_POST['mail'];
+    $password = $_POST['password'];
     $query = "
-    SELECT *
-    FROM discount
-    WHERE discount_code='$discount_code'";
-    $result = mysqli_query($link, $query) or die(mysqli_error($link));
-    $exist_discount_code = mysqli_fetch_assoc($result);
-    var_dump($exist_discount_code);
-    if($exist_discount_code['amount'] > $exist_discount_code['status']){
-        $id = $exist_discount_code['id'];
-        $status = $exist_discount_code['status']+1;
-        $query = "UPDATE discount SET status='$status'
-        WHERE id='$id'";
-        $result = mysqli_query($link, $query) or die(mysqli_error($link));
-        echo 'log in is successful. enjoy the webinar';
-    } else {
-        echo 'login denied the discount code has already been used';
-    }
-}
+    SELECT * 
+    FROM users
+    WHERE mail='$mail' AND password='$password'";
 
-if(isset($_POST['log_out'])){
-    header('Location: /');
+    $result = mysqli_query($link, $query) or die(mysqli_error($link));
+
+    $user = mysqli_fetch_assoc($result);
+
+    if($user) {
+	    $_SESSION['user_id'] = $user['id'];
+	}
 }
+if(isset($_SESSION['user_id'])) {
+	echo $_SESSION['user_id'];
+    ?>
+    <form method="POST" action="">
+	<input name="url"><br><br>
+	<input name="title"><br><br>
+        <textarea name="text"></textarea><br><br>
+        <input type="submit">
+        <input type="submit" name="log_out" value="log_out">
+    </form>
+    <?php
+} else {
+    ?>
+    <form method="POST" action="">
+        mail<br>
+        <input name="mail"><br>
+        password<br>
+        <input name="password" type="password"><br>
+        <input name="log_in" type="submit" value="log_in">
+        <input type="submit" name="log_out" value="log_out">
+    </form>
+    <?php
+}
+if(isset($_POST['log_out'])){
+    session_destroy();
+   // header('Location: /');
+
+}
+$query = "SELECT * FROM pages";
+$result = mysqli_query($link, $query) or die(mysqli_error($link));
+for($data=[]; $row=mysqli_fetch_assoc($result); $data[]=$row);
+//var_dump($pages);
+$table = "<table border=1>
+	<tr>
+		<td>id</td>
+		<td>url</td>
+		<td>title</td>
+		<td>text</td>
+		<td>edit</td>
+	</tr>";
+foreach($data as $page){
+	$table .= "<tr>
+		<td>".$page['id']."</td>
+		<td>".$page['url']."</td>
+		<td>".$page['title']."</td>
+		<td>".$page['text']."</td>
+		<td><a href=\"\">edit</td>
+		</tr>";
+}
+$table .= "</table>";
+echo $table;
