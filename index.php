@@ -30,4 +30,3 @@ for($i=0; $i<count($data); $i+=20){
 //$arr1 = array_splice($data, 0, 5);
 //var_dump($arr1);
 //var_dump($data);
-//aassss
