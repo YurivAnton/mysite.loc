@@ -1,32 +1,37 @@
 <?php
 session_start();
-$host = 'localhost';
-$user = 'base_user';
-$password = '123';
-$dbName = 'test';
 
-$link = mysqli_connect($host, $user, $password,$dbName);
-$result = mysqli_query($link, "SET NAMES 'utf8'");
-/*
-for($i=0; $i<=50; $i++)
-{
-	$query = "
-	INSERT INTO pages
-	SET url='$i', title='$i', text='$i'";
-	$result = mysqli_query($link, $query) or die(mysqli_error($link));
-}
-phpinfo();
- */
-$query = "SELECT * FROM pages";
-$result = mysqli_query($link, $query) or die(mysqli_error($link));
+//Добавляем сессию
+// Задача: 5
+include 'connect_db.php';
+?>
+<!DOCTYPE html>
+<html>
+    <head>
 
-for($data=[]; $row=mysqli_fetch_assoc($result); $data[]=$row);
+    </head>
+    <body>
+        <p>aaaaaaaaaaaaaaaaa</p>
+        <?php
+            if(isset($_SESSION['message'])){
+                echo $_SESSION['message'].'<br>';
+                unset($_SESSION['message']);
+            }
+            if(!empty($_SESSION['auth'])){
 
-for($i=0; $i<count($data); $i+=20){
-	$arr = array_slice($data, $i, 20);
-	var_dump($arr);
-	echo '<br><br>';
-}
-//$arr1 = array_splice($data, 0, 5);
-//var_dump($arr1);
-//var_dump($data);
+                echo 'Ви зайшли як '.$_SESSION['login'].' !<br>';
+                $a="<a href=\"1.php\">1.php</a><br>
+                    <a href=\"2.php\">2.php</a><br>
+                    <a href=\"3.php\">3.php</a><br>
+                ";
+                echo $a;
+            }
+
+
+            ?>
+        <p>bbbbbbbbbbbbbbbbbb</p>
+        <a href="login.php">login</a>
+        <a href="logout.php">logout</a>
+        <a href="register.php">registration</a>
+    </body>
+</html>
