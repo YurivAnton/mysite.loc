@@ -1,7 +1,6 @@
 <?php
 session_start();
-//Добавляем сессию
-// Задача: 5
+//53 Хеширование
 
 include 'connect_db.php';
 
@@ -10,25 +9,29 @@ if(isset($_SESSION['message'])){
     unset($_SESSION['message']);
 }
 
-if(isset($_POST['login']) AND isset($_POST['password'])){
+if(isset($_POST['login'])){
     $login = $_POST['login'];
-    $password = $_POST['password'];
 
     $query = "
-    SELECT * FROM user WHERE login='$login' AND password='$password'
+    SELECT * FROM user WHERE login='$login'
     ";
     $result = mysqli_query($link, $query) or die(mysqli_error($link));
 
     $user = mysqli_fetch_assoc($result);
     if(!empty($user)){
-        $_SESSION['message'] = 'ви пройшли!';
-        $_SESSION['auth'] = true;
-        $_SESSION['login'] = $login;
-        header("Location: /");
-    }else{
-        $_SESSION['message'] = 'неправильний логін або пароль';
+        $hash = $user['password'];
 
-        //header("Location: /login.php");
+        if(password_verify($_POST['password'], $hash)){
+            $_SESSION['message'] = 'ви пройшли!';
+            $_SESSION['auth'] = true;
+            $_SESSION['login'] = $login;
+            header("Location: /");
+        }else{
+            $_SESSION['message'] = 'неправильний логін або пароль';
+
+            header("Location: /login.php");
+
+        }
     }
 
 }

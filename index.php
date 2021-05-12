@@ -26,8 +26,6 @@ include 'connect_db.php';
                 ";
                 echo $a;
             }
-
-
             ?>
         <p>bbbbbbbbbbbbbbbbbb</p>
         <a href="login.php">login</a>

@@ -1,8 +1,8 @@
 <?php
 session_start();
 include 'connect_db.php';
-//Регистрация
-// Задача: 1-7
+//53 Хеширование
+
 
 $login = '';
 $password = '';
@@ -48,14 +48,15 @@ if(!empty($_POST['login']) AND !empty($_POST['password'])
         $user = mysqli_fetch_assoc(mysqli_query($link, $query));
 
         if (empty($user)) {
+            $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
             $query = "INSERT INTO user 
                         SET login='$login', password='$password',
-                        birth='$birth', email='$email', 
+                        salt='$salt', birth='$birth', email='$email', 
                         registration_date='$registration_date',
                         country='$country'";
             mysqli_query($link, $query) or die(mysqli_error($link));
 
-            $_SESSION['auth'] = true;
+            //$_SESSION['auth'] = true;
 
             $id = mysqli_insert_id($link);
             $_SESSION['id'] = $id;
