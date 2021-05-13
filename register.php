@@ -20,7 +20,7 @@ if(!empty($_POST['login']) AND !empty($_POST['password'])
     $password = $_POST['password'];
     $birth = $_POST['birth'];
     $email = $_POST['email'];
-    $registration_date = date('Y-m_d');
+    $registration_date = date('Y-m-d');
     $country = $_POST['country'];
 
     $login_confirm = preg_replace('#\w+#', '', $login);
@@ -48,12 +48,12 @@ if(!empty($_POST['login']) AND !empty($_POST['password'])
         $user = mysqli_fetch_assoc(mysqli_query($link, $query));
 
         if (empty($user)) {
-            $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
+		$password = password_hash($_POST['password'], PASSWORD_DEFAULT);
             $query = "INSERT INTO user 
                         SET login='$login', password='$password',
-                        salt='$salt', birth='$birth', email='$email', 
-                        registration_date='$registration_date',
-                        country='$country'";
+                        birth='$birth', email='$email', country='$country', 
+                        registration_date='$registration_date'
+                        ";
             mysqli_query($link, $query) or die(mysqli_error($link));
 
             //$_SESSION['auth'] = true;
@@ -82,7 +82,7 @@ if(!empty($_POST['login']) AND !empty($_POST['password'])
     email<br>
     <input name="email" type="text" value="<?= $email ?>"><br>
     <select name="country">
-        <option>Україна</option>
+        <option>ukrajina</option>
         <option>Білорусія</option>
         <option>Словаччина</option>
     </select><br>
