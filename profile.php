@@ -13,7 +13,7 @@ $result = mysqli_query($link, $query) or die(mysqli_error($link));
 $user = mysqli_fetch_assoc($result);
 
 $age = strtotime(date('Y-m-d'))-strtotime($user['birth']);
-$age = ceil($age / 3600 / 24 / 365);
+$age = floor($age / 3600 / 24 / 365);
 
 echo '<a href="/">HOME</a>  <a href="users.php">Назад</a><br>';
 echo 'Ваш логін - '. $user['login'].'<br>';

@@ -4,9 +4,9 @@ session_start();
 
 include 'connect_db.php';
 
-if(isset($_SESSION['message'])){
-    echo $_SESSION['message'];
-    unset($_SESSION['message']);
+if(isset($_SESSION['message']['login'])){
+    echo $_SESSION['message']['login'];
+    unset($_SESSION['message']['login']);
 }
 
 if(isset($_POST['login'])){
@@ -22,18 +22,21 @@ if(isset($_POST['login'])){
         $hash = $user['password'];
 
         if(password_verify($_POST['password'], $hash)){
-            $_SESSION['message'] = 'ви пройшли!';
+            $_SESSION['id'] = $user['id'];
+            $_SESSION['message']['login'] = 'Ви успішно авторизувались!';
             $_SESSION['auth'] = true;
             $_SESSION['login'] = $login;
             header("Location: /");
         }else{
-            $_SESSION['message'] = 'неправильний логін або пароль';
+            $_SESSION['message']['login'] = 'неправильний логін або пароль';
 
             header("Location: /login.php");
-
         }
-    }
+    }else{
+        $_SESSION['message']['login'] = 'неправильний логін або пароль';
 
+        header("Location: /login.php");
+    }
 }
 
 ?>

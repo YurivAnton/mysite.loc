@@ -57,7 +57,7 @@ if(!empty($_POST['login']) AND !empty($_POST['password'])
             mysqli_query($link, $query) or die(mysqli_error($link));
 
             //$_SESSION['auth'] = true;
-
+            header('Location: /');
             $id = mysqli_insert_id($link);
             $_SESSION['id'] = $id;
         } else {

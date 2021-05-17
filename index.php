@@ -13,9 +13,9 @@ include 'connect_db.php';
     <body>
         <p>aaaaaaaaaaaaaaaaa</p>
         <?php
-            if(isset($_SESSION['message'])){
-                echo $_SESSION['message'].'<br>';
-                unset($_SESSION['message']);
+            if(isset($_SESSION['message']['login'])){
+                echo $_SESSION['message']['login'].'<br>';
+                unset($_SESSION['message']['login']);
             }
             if(!empty($_SESSION['auth'])){
 
@@ -23,6 +23,7 @@ include 'connect_db.php';
                 $a="<a href=\"1.php\">1.php</a><br>
                     <a href=\"2.php\">2.php</a><br>
                     <a href=\"3.php\">3.php</a><br>
+                    <a href=\"users.php\">Список всіх користувачів</a><br>
                 ";
                 echo $a;
             }
