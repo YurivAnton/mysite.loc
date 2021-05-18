@@ -15,7 +15,8 @@ $user = mysqli_fetch_assoc($result);
 $age = strtotime(date('Y-m-d'))-strtotime($user['birth']);
 $age = floor($age / 3600 / 24 / 365);
 
-echo '<a href="/">HOME</a>  <a href="users.php">Назад</a><br>';
-echo 'Ваш логін - '. $user['login'].'<br>';
-echo 'Вам - '.$age.'<br>';
-echo 'Ваша країна - '.$user['country'];
+$content = 'Ваш логін - '. $user['login'].'<br>
+Вам - '.$age.'<br>
+Ваша країна - '.$user['country'];
+
+include 'layout.php';

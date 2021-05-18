@@ -6,8 +6,8 @@ $query = " SELECT id, login, birth FROM user";
 $result = mysqli_query($link, $query) or die(mysqli_error($link));
 $id = $_SESSION['id'];
 for($data=[]; $row=mysqli_fetch_assoc($result); $data[]=$row);
-//var_dump($data);
-$table ='
+
+$content ='
 	<table border="1">
 	<tr>
 		<th>id</th>
@@ -17,20 +17,20 @@ $table ='
 	';
 
 foreach($data as $user){
-	$table .=
+    $content .=
 		'<tr>
 		<td>'.$user['id'].'</td>
 		<td>'.$user['login'].'</td>
         <td><a href="profile.php?id='.$user['id'].'">show</a></td>';
 	if($id == $user['id']){
-	    $table .= '<td><a href="personalArea.php">edit</a></td>';
-	    $table .= '<td><a href="deleteProfile.php">delete</a></td>';
+        $content .= '<td><a href="personalArea.php">edit</a></td>';
+        $content .= '<td><a href="deleteProfile.php">delete</a></td>';
     }/*else{
 	    $table .= '<td></td>';
 	    $table .= '<td></td>';
     }*/
-	$table .= '</tr>';
+    $content .= '</tr>';
 }
-$table .= '</table>';
-echo '<a href="/">HOME</a>';
-echo $table;
+$content .= '</table>';
+
+include 'layout.php';

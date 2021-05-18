@@ -52,7 +52,7 @@ if(!empty($_POST['login']) AND !empty($_POST['password'])
             $query = "INSERT INTO user 
                         SET login='$login', password='$password',
                         birth='$birth', email='$email', country='$country', 
-                        registration_date='$registration_date'
+                        registration_date='$registration_date', status='user'
                         ";
             mysqli_query($link, $query) or die(mysqli_error($link));
 
@@ -82,7 +82,7 @@ if(!empty($_POST['login']) AND !empty($_POST['password'])
     email<br>
     <input name="email" type="text" value="<?= $email ?>"><br>
     <select name="country">
-        <option>ukrajina</option>
+        <option>Україна</option>
         <option>Білорусія</option>
         <option>Словаччина</option>
     </select><br>

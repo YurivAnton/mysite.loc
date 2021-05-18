@@ -25,6 +25,7 @@ if(isset($_POST['login'])){
             $_SESSION['id'] = $user['id'];
             $_SESSION['message']['login'] = 'Ви успішно авторизувались!';
             $_SESSION['auth'] = true;
+            $_SESSION['status'] = $user['status'];
             $_SESSION['login'] = $login;
             header("Location: /");
         }else{

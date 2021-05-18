@@ -9,7 +9,13 @@ if(!empty($_SESSION['auth'])) {
     $hash = $user['password'];
     if (!empty($_POST['password'])) {
         if (password_verify($_POST['password'], $hash)) {
-            $query = "DELETE FROM user WHERE id='$id'";
+            if(isset($_GET['deleteId'])){
+                $id = $_GET['deleteId'];
+                $query = "DELETE FROM user WHERE id='$id'";
+                header('Location: /admin.php');
+            }else{
+                $query = "DELETE FROM user WHERE id='$id'";
+            }
             mysqli_query($link, $query) or die(mysqli_error($link));
 
             $_SESSION['auth'] = null;

@@ -1,36 +1,15 @@
 <?php
 session_start();
 
-//Добавляем сессию
-// Задача: 5
-include 'connect_db.php';
-?>
-<!DOCTYPE html>
-<html>
-    <head>
+include 'pages/connect_db.php';
 
-    </head>
-    <body>
-        <p>aaaaaaaaaaaaaaaaa</p>
-        <?php
-            if(isset($_SESSION['message']['login'])){
-                echo $_SESSION['message']['login'].'<br>';
-                unset($_SESSION['message']['login']);
-            }
-            if(!empty($_SESSION['auth'])){
-
-                echo 'Ви зайшли як '.$_SESSION['login'].' !<br>';
-                $a="<a href=\"1.php\">1.php</a><br>
-                    <a href=\"2.php\">2.php</a><br>
-                    <a href=\"3.php\">3.php</a><br>
-                    <a href=\"users.php\">Список всіх користувачів</a><br>
-                ";
-                echo $a;
-            }
-            ?>
-        <p>bbbbbbbbbbbbbbbbbb</p>
-        <a href="login.php">login</a>
-        <a href="logout.php">logout</a>
-        <a href="register.php">registration</a>
-    </body>
-</html>
+    if(isset($_SESSION['message']['login'])){
+        echo $_SESSION['message']['login'].'<br>';
+        unset($_SESSION['message']['login']);
+    }
+    if(!empty($_SESSION['auth'])){
+        $content ="<a href=\"pages/users.php\">Список всіх користувачів</a><br>";
+    }else{
+        $content = '';
+    }
+include 'pages/layout.php';
