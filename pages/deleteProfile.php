@@ -9,17 +9,20 @@ if(!empty($_SESSION['auth'])) {
     $hash = $user['password'];
     if (!empty($_POST['password'])) {
         if (password_verify($_POST['password'], $hash)) {
-            if(isset($_GET['deleteId'])){
+            if(isset($_GET['deleteId']) AND isset($_GET['admin'])){
                 $id = $_GET['deleteId'];
                 $query = "DELETE FROM user WHERE id='$id'";
-                header('Location: /admin.php');
+
             }else{
                 $query = "DELETE FROM user WHERE id='$id'";
             }
             mysqli_query($link, $query) or die(mysqli_error($link));
-
-            $_SESSION['auth'] = null;
-            header('Location: /');
+            if(isset($_GET['admin'])){
+                header('Location: /admin.php');
+            } else {
+                $_SESSION['auth'] = null;
+                header('Location: /');
+            }
         } else {
             $_SESSION['message']['password'] = 'Неправильний пароль!';
         }

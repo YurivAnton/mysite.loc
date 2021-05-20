@@ -52,14 +52,15 @@ if(!empty($_POST['login']) AND !empty($_POST['password'])
             $query = "INSERT INTO user 
                         SET login='$login', password='$password',
                         birth='$birth', email='$email', country='$country', 
-                        registration_date='$registration_date', status='user'
+                        registration_date='$registration_date', status_id='2',
+                        banned='0'
                         ";
             mysqli_query($link, $query) or die(mysqli_error($link));
 
-            //$_SESSION['auth'] = true;
-            header('Location: /');
+
             $id = mysqli_insert_id($link);
             $_SESSION['id'] = $id;
+            header('Location: /');
         } else {
             $_SESSION['message']['login'] = 'такий логін вже існує!<br>';
         }
