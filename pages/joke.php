@@ -19,11 +19,13 @@ if(isset($_GET['category'])){
     $query = "SELECT *, user.login as user_name
             FROM jokes
             LEFT JOIN user ON user.id=jokes.user_id
-            WHERE category='$category'";
+            WHERE category='$category'
+            ORDER BY date DESC";
 }else {
     $query = "SELECT *, user.login as user_name
             FROM jokes
-            LEFT JOIN user ON user.id=jokes.user_id";
+            LEFT JOIN user ON user.id=jokes.user_id
+            ORDER BY date DESC";
 }
 
 $result = mysqli_query($link, $query) or die(mysqli_error($link));
