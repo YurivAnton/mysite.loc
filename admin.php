@@ -1,6 +1,6 @@
 <?php
 session_start();
-include 'pages/connect_db.php';
+include 'elems/connect_db.php';
 
 if(isset($_GET['changeStatus'])){
     $status = $_GET['changeStatus'];
@@ -11,15 +11,31 @@ if(isset($_GET['changeStatus'])){
 
     header('Location: /admin.php');
 }
+
 if(isset($_GET['ban_id'])){
     $id = $_GET['ban_id'];
     $query = "UPDATE user SET banned='1' WHERE id='$id'";
     mysqli_query($link, $query) or die(mysqli_error($link));
 }
+
 if(isset($_GET['unban_id'])){
     $id = $_GET['unban_id'];
     $query = "UPDATE user SET banned='0' WHERE id='$id'";
     mysqli_query($link, $query) or die(mysqli_error($link));
+}
+
+if(isset($_GET['allow_joke'])){
+    $id = $_GET['id'];
+    $query = "UPDATE jokes SET status=1 WHERE id='$id'";
+    mysqli_query($link, $query) or die(mysqli_error($link));
+    //header('Location: /admin.php');
+}
+
+if(isset($_GET['delete_joke'])){
+    $id = $_GET['id'];
+    $query = "DELETE FROM jokes WHERE id='$id'";
+    mysqli_query($link, $query) or die(mysqli_error($link));
+    header('Location: /admin.php');
 }
 
 if(!empty($_SESSION['auth']) AND $_SESSION['status'] == 'admin'){
@@ -29,7 +45,6 @@ if(!empty($_SESSION['auth']) AND $_SESSION['status'] == 'admin'){
     $result = mysqli_query($link, $query) or die(mysqli_error($link));
 
     for($data=[]; $row=mysqli_fetch_assoc($result); $data[]=$row);
-    //var_dump($data);
     $content = 'Hello '.$_SESSION['login'];
     $content .= '<br>';
     $content .= '<table border="1">
@@ -64,9 +79,25 @@ if(!empty($_SESSION['auth']) AND $_SESSION['status'] == 'admin'){
                 </tr>';
         }
     $content .= '</table>';
+
+    $query = "SELECT *, user.login as user_name, jokes.id as joke_id 
+            FROM jokes
+            LEFT JOIN user ON user.id=jokes.user_id
+            WHERE status=0";
+    $result = mysqli_query($link, $query) or die(mysqli_error($link));
+
+    for($data=[]; $row=mysqli_fetch_assoc($result); $data[]=$row);
+
+    //var_dump($data);
+    foreach($data as $joke) {
+        $content .= '<h4>' . $joke['user_name'] . ' ' . $joke['date'] . '</h4>';
+        $content .= '<p>' . $joke['category'] . '<br>' . $joke['joke'] . '</p>';
+        $content .= '<a href="admin.php?allow_joke=1&id='.$joke['joke_id'].'">Allow</a><br>
+                     <a href="admin.php?delete_joke=1&id='.$joke['joke_id'].'">Delete</a>';
+    }
 }else{
     $_SESSION['message']['login'] = 'Ви не адмін!!!!';
     header('Location: /');
 }
 
-include 'pages/layout.php';
+include 'elems/layout.php';

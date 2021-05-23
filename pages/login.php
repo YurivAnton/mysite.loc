@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-include 'connect_db.php';
+include '../elems/connect_db.php';
 
 if(isset($_SESSION['message']['login'])){
     echo $_SESSION['message']['login'];
@@ -37,12 +37,12 @@ if(isset($_POST['login'])){
         }else{
             $_SESSION['message']['login'] = 'неправильний логін або пароль';
 
-            header("Location: /login.php");
+            header("Location: login.php");
         }
     }else{
         $_SESSION['message']['login'] = 'неправильний логін або пароль';
 
-        header("Location: /login.php");
+        header("Location: login.php");
     }
 }
 
