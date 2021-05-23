@@ -1,6 +1,6 @@
 <?php
 session_start();
-include 'connect_db.php';
+include '../elems/connect_db.php';
 if(!empty($_SESSION['auth'])) {
     $id = $_SESSION['id'];
     $query = "SELECT * FROM user WHERE id='$id'";

@@ -1,6 +1,6 @@
 <?php
 session_start();
-include 'connect_db.php';
+include '../elems/connect_db.php';
 
 $id = $_GET['id'];
 $query = "
@@ -19,4 +19,4 @@ $content = 'Ваш логін - '. $user['login'].'<br>
 Вам - '.$age.'<br>
 Ваша країна - '.$user['country'];
 
-include 'layout.php';
+include '../elems/layout.php';

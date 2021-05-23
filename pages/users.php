@@ -1,6 +1,6 @@
 <?php
 session_start();
-include 'connect_db.php';
+include '../elems/connect_db.php';
 
 $query = " SELECT id, login, birth FROM user";
 $result = mysqli_query($link, $query) or die(mysqli_error($link));
@@ -25,12 +25,9 @@ foreach($data as $user){
 	if($id == $user['id']){
         $content .= '<td><a href="personalArea.php">edit</a></td>';
         $content .= '<td><a href="deleteProfile.php">delete</a></td>';
-    }/*else{
-	    $table .= '<td></td>';
-	    $table .= '<td></td>';
-    }*/
+    }
     $content .= '</tr>';
 }
 $content .= '</table>';
 
-include 'layout.php';
+include '../elems/layout.php';

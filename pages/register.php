@@ -1,8 +1,6 @@
 <?php
 session_start();
-include 'connect_db.php';
-//53 Хеширование
-
+include '../elems/connect_db.php';
 
 $login = '';
 $password = '';

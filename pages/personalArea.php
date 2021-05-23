@@ -1,6 +1,6 @@
 <?php
 session_start();
-include 'connect_db.php';
+include '../elems/connect_db.php';
 
 if(!empty($_SESSION['auth'])){
 	$id = $_SESSION['id'];
@@ -30,4 +30,4 @@ $content = "<form action=\"\" method=\"POST\">
     echo '<a href="/">HOME</a>';
 }
 
-include 'layout.php';
+include '../elems/layout.php';
