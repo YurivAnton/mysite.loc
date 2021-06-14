@@ -40,3 +40,6 @@ a.active{
     text-decoration: underline;
     color: red;
 }
+div{
+    border: 1px solid black;
+}

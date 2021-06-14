@@ -4,6 +4,9 @@ include 'connect_db.php';
 if(!empty($_SESSION['auth'])) {
     echo '<a href="../pages/users.php">Список всіх користувачів</a><br>';
 }
+
+echo '<a href="../pages/forum.php">Forum</a>';
+
 $query = "SELECT DISTINCT(category) FROM jokes";
 $result = mysqli_query($link, $query) or die(mysqli_error($link));
 for($data=[]; $row=mysqli_fetch_assoc($result); $data[]=$row);
